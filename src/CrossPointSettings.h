@@ -19,7 +19,7 @@ class CrossPointSettings {
   enum SLEEP_SCREEN_MODE { DARK = 0, LIGHT = 1, CUSTOM = 2, COVER = 3 };
 
   // Status bar display type enum
-  enum STATUS_BAR_MODE { NONE = 0, BATTERY = 1, PROGRESS = 2, FULL = 3 };
+  enum STATUS_BAR_MODE { NONE = 0, NO_PROGRESS = 1, FULL = 2 };
 
   // Sleep screen settings
   uint8_t sleepScreen = DARK;

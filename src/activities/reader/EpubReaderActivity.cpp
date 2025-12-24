@@ -330,9 +330,15 @@ void EpubReaderActivity::renderContents(std::unique_ptr<Page> page) {
 }
 
 void EpubReaderActivity::renderStatusBar() const {
+  // determine visible status bar elements
+  const bool showProgress = SETTINGS.statusBar == CrossPointSettings::STATUS_BAR_MODE::FULL;
+  const bool showBattery = SETTINGS.statusBar == CrossPointSettings::STATUS_BAR_MODE::NO_PROGRESS || SETTINGS.statusBar == CrossPointSettings::STATUS_BAR_MODE::FULL;
+  const bool showChapterTitle = SETTINGS.statusBar == CrossPointSettings::STATUS_BAR_MODE::NO_PROGRESS || SETTINGS.statusBar == CrossPointSettings::STATUS_BAR_MODE::FULL;
+
+  // height variable shared by all elements
   constexpr auto textY = 776;
 
-  if (Settings.statusBar && CrossPointSettings::STATUS_BAR_MODE::PROGRESS) {
+  if (showProgress) {
     // Calculate progress in book
     const float sectionChapterProg = static_cast<float>(section->currentPage) / section->pageCount;
     const uint8_t bookProgress = epub->calculateProgress(currentSpineIndex, sectionChapterProg);
@@ -345,7 +351,7 @@ void EpubReaderActivity::renderStatusBar() const {
                       progress.c_str());
   }
   
-  if (Settings.statusBar && CrossPointSettings::STATUS_BAR_MODE::BATTERY) {
+  if (showBattery) {
     // Left aligned battery icon and percentage
     const uint16_t percentage = battery.readPercentage();
     const auto percentageText = std::to_string(percentage) + "%";
@@ -380,7 +386,7 @@ void EpubReaderActivity::renderStatusBar() const {
   }
 
 
-  if (Settings.statusBar && CrossPointSettings::STATUS_BAR_MODE::FULL) {
+  if (showChapterTitle) {
     // Centered chatper title text
     // Page width minus existing content with 30px padding on each side
     const int titleMarginLeft = 20 + percentageTextWidth + 30 + marginLeft;
