@@ -13,7 +13,7 @@ CrossPointSettings CrossPointSettings::instance;
 namespace {
 constexpr uint8_t SETTINGS_FILE_VERSION = 1;
 constexpr uint8_t SETTINGS_COUNT = 4;
-constexpr char SETTINGS_FILE[] = "/sd/.crosspoint/settings.bin";
+constexpr char SETTINGS_FILE[] = "/.crosspoint/settings.bin";
 }  // namespace
 
 bool CrossPointSettings::saveToFile() const {
